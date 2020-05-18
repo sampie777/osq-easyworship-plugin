@@ -1,8 +1,8 @@
-package plugins.easyworship.queItems
+package queItems
 
 import GUI
 import plugins.common.BasePlugin
-import plugins.easyworship.EasyWorship
+import EasyWorship
 
 class EasyWorshipNextSongQueItem(plugin: BasePlugin) : EasyWorshipQueItem(plugin, "Next song") {
     override fun activate() {

@@ -1,8 +1,8 @@
-package plugins.easyworship.queItems
+package queItems
 
 import GUI
 import plugins.common.BasePlugin
-import plugins.easyworship.EasyWorship
+import EasyWorship
 
 class EasyWorshipLogoScreenQueItem(plugin: BasePlugin) : EasyWorshipQueItem(plugin, "Toggle logo screen") {
     override fun activate() {

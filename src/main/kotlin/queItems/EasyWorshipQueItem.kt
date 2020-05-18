@@ -1,4 +1,4 @@
-package plugins.easyworship.queItems
+package queItems
 
 import plugins.common.BasePlugin
 import plugins.common.QueItem

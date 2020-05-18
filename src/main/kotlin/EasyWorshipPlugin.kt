@@ -1,17 +1,19 @@
-package plugins.easyworship
-
 import gui.utils.createImageIcon
 import handles.QueItemTransferHandler
 import plugins.common.BasePlugin
 import plugins.common.QueItem
-import plugins.easyworship.queItems.*
+import queItems.*
 import java.awt.*
+import java.net.URL
+import java.util.logging.Logger
 import javax.swing.*
 import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 @Suppress("unused")
 class EasyWorshipPlugin : BasePlugin {
+    private val logger = Logger.getLogger(EasyWorshipPlugin::class.java.name)
+
     override val name = "EasyWorshipPlugin"
     override val description = "Que items for integration with EasyWorship"
 
@@ -73,5 +75,15 @@ class EasyWorshipPlugin : BasePlugin {
         super.enable()
         EasyWorshipProperties.writeToFile = true
         EasyWorshipProperties.load()
+    }
+
+    private fun createImageIcon(path: String): ImageIcon? {
+        val imgURL: URL? = EasyWorshipPlugin::class.java.getResource(path)
+        if (imgURL != null) {
+            return ImageIcon(imgURL)
+        }
+
+        logger.severe("Couldn't find imageIcon: $path")
+        return null
     }
 }
