@@ -16,7 +16,7 @@ class EasyWorshipPlugin : BasePlugin {
 
     override val name = "EasyWorshipPlugin"
     override val description = "Que items for integration with EasyWorship"
-    override val version = "0.0.1"
+    override val version = PluginInfo.version
 
     override val icon: Icon? = createImageIcon("/icon-14.png")
 
