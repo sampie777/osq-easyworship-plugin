@@ -70,38 +70,37 @@ object EasyWorship {
     private const val windowContainsText = "EasyWorship 2009"
     private const val innerWindowContainsText = "Genesis 1:1"
 
-    private var windowHandle: HWND? = null
     private val robot = Robot()
 
-    init {
-        findWindowHandle(windowContainsText)
-    }
-
-    private fun findWindowHandle(windowTitle: String) {
+    private fun findWindowHandle(windowTitle: String): HWND? {
         if (!System.getProperty("os.name").toLowerCase().contains("win")) {
             logger.warning("Must run on Windows to find the window")
             Notifications.add("Application must run on Windows operating system", "EasyWorship")
-            return
+            return null
         }
 
         val windowFinder = WindowFinder(windowTitle)
         User32.INSTANCE.EnumWindows(windowFinder, null)
-        windowHandle = windowFinder.windowHandle
 
         val innerWindowFinder = InnerWindowFinder(innerWindowContainsText)
-        User32.INSTANCE.EnumChildWindows(windowHandle, innerWindowFinder, null)
+        User32.INSTANCE.EnumChildWindows(windowFinder.windowHandle, innerWindowFinder, null)
+
         if (innerWindowFinder.innerWindowHandle != null) {
-            windowHandle = innerWindowFinder.innerWindowHandle
+            return innerWindowFinder.innerWindowHandle
+        }
+        if (windowFinder.windowHandle != null) {
+            return windowFinder.windowHandle
         }
 
-        if (windowHandle == null) {
-            logger.warning("Failed to find window: $windowTitle")
-            Notifications.add("Could not find '$windowTitle' window", "EasyWorship")
-        }
+        logger.warning("Failed to find window: $windowTitle")
+        Notifications.add("Could not find '$windowTitle' window", "EasyWorship")
+        return null
     }
 
     fun doPreviousVerse(amount: Int = 1) {
-        focus()
+        if (!focus()) {
+            return
+        }
 
         for (step in 1..amount) {
             previousVerse()
@@ -109,7 +108,9 @@ object EasyWorship {
     }
 
     fun doNextVerse(amount: Int = 1) {
-        focus()
+        if (!focus()) {
+            return
+        }
 
         for (step in 1..amount) {
             nextVerse()
@@ -117,7 +118,9 @@ object EasyWorship {
     }
 
     fun doPreviousSong(amount: Int = 1) {
-        focus()
+        if (!focus()) {
+            return
+        }
 
         for (step in 1..amount) {
             previousSong()
@@ -125,7 +128,9 @@ object EasyWorship {
     }
 
     fun doNextSong(amount: Int = 1) {
-        focus()
+        if (!focus()) {
+            return
+        }
 
         for (step in 1..amount) {
             nextSong()
@@ -133,34 +138,36 @@ object EasyWorship {
     }
 
     fun doLogoScreen() {
-        focus()
+        if (!focus()) {
+            return
+        }
+
         logoScreen()
     }
 
     fun doBlackScreen() {
-        focus()
+        if (!focus()) {
+            return
+        }
+
         blackScreen()
     }
 
     fun doClearScreen() {
-        focus()
-        clearScreen()
-    }
-
-    private fun focus() {
-        logger.info("Focus window")
-
-        if (windowHandle == null) {
-            findWindowHandle(windowContainsText)
-        }
-
-        if (windowHandle == null) {
-            Notifications.add("Cannot focus window: window not found", "EasyWorship")
+        if (!focus()) {
             return
         }
 
+        clearScreen()
+    }
+
+    private fun focus(): Boolean {
+        logger.info("Focus window")
+        val windowHandle = findWindowHandle(windowContainsText) ?: return false
+
         User32.INSTANCE.SetForegroundWindow(windowHandle)
         User32.INSTANCE.SetFocus(windowHandle)
+        return true
     }
 
     private fun previousVerse() {

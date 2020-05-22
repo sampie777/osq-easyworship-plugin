@@ -1,5 +1,6 @@
 import gui.utils.createImageIcon
 import handles.QueItemTransferHandler
+import objects.que.JsonQue
 import plugins.common.BasePlugin
 import plugins.common.QueItem
 import queItems.*
@@ -69,6 +70,19 @@ class EasyWorshipPlugin : BasePlugin {
             "Toggle black screen" -> EasyWorshipBlackScreenQueItem(this)
             "Toggle clear screen" -> EasyWorshipClearScreenQueItem(this)
             else -> throw IllegalArgumentException("Invalid EasyWorship que item: $value")
+        }
+    }
+
+    override fun jsonToQueItem(jsonQueItem: JsonQue.QueItem): QueItem {
+        return when (jsonQueItem.className) {
+            EasyWorshipPreviousVerseQueItem::class.java.simpleName -> EasyWorshipPreviousVerseQueItem(this)
+            EasyWorshipNextVerseQueItem::class.java.simpleName -> EasyWorshipNextVerseQueItem(this)
+            EasyWorshipPreviousSongQueItem::class.java.simpleName -> EasyWorshipPreviousSongQueItem(this)
+            EasyWorshipNextSongQueItem::class.java.simpleName -> EasyWorshipNextSongQueItem(this)
+            EasyWorshipLogoScreenQueItem::class.java.simpleName -> EasyWorshipLogoScreenQueItem(this)
+            EasyWorshipBlackScreenQueItem::class.java.simpleName -> EasyWorshipBlackScreenQueItem(this)
+            EasyWorshipClearScreenQueItem::class.java.simpleName -> EasyWorshipClearScreenQueItem(this)
+            else -> throw IllegalArgumentException("Invalid EasyWorship que item: ${jsonQueItem.className}")
         }
     }
 
