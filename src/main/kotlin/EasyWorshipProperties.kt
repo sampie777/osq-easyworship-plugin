@@ -3,6 +3,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.lang.Exception
 import java.util.*
 import java.util.logging.Logger
 
@@ -13,16 +14,17 @@ object EasyWorshipProperties {
     // Leave disabled when running tests.
     var writeToFile: Boolean = false
 
-    private val propertiesFilePath = getCurrentJarDirectory(this).absolutePath + File.separatorChar + "osq-easyworship.properties"
+    private val propertiesFilePath =
+            getCurrentJarDirectory(this).absolutePath + File.separatorChar + "osq-easyworship.properties"
     private val properties = Properties()
 
-    var previousVerseKey: Int = -1
-    var nextVerseKey: Int = -1
-    var previousSongKey: Int = -1
-    var nextSongKey: Int = -1
-    var logoScreenKey: Int = -1
-    var blackScreenKey: Int = -1
-    var clearScreenKey: Int = -1
+    var previousVerseKey: String = ""
+    var nextVerseKey: String = ""
+    var previousSongKey: String = ""
+    var nextSongKey: String = ""
+    var logoScreenKey: String = ""
+    var blackScreenKey: String = ""
+    var clearScreenKey: String = ""
 
     fun load() {
         logger.info("Loading easyworship properties")
@@ -33,13 +35,13 @@ object EasyWorshipProperties {
             logger.info("No easyworship properties file found, using defaults")
         }
 
-        previousVerseKey = properties.getProperty("previousVerseKey", KeyEvent.VK_UP.toString()).toInt()
-        nextVerseKey = properties.getProperty("nextVerseKey", KeyEvent.VK_DOWN.toString()).toInt()
-        previousSongKey = properties.getProperty("previousSongKey", KeyEvent.VK_PAGE_UP.toString()).toInt()
-        nextSongKey = properties.getProperty("nextSongKey", KeyEvent.VK_ENTER.toString()).toInt()
-        logoScreenKey = properties.getProperty("logoScreenKey", KeyEvent.VK_L.toString()).toInt()
-        blackScreenKey = properties.getProperty("blackScreenKey", KeyEvent.VK_B.toString()).toInt()
-        clearScreenKey = properties.getProperty("clearScreenKey", KeyEvent.VK_C.toString()).toInt()
+        previousVerseKey = getFirstKeyCode(properties.getProperty("SlidePrevKeys", KeyEvent.VK_UP.toString()))
+        nextVerseKey = getFirstKeyCode(properties.getProperty("SlideNextKeys", KeyEvent.VK_DOWN.toString()))
+        previousSongKey = getFirstKeyCode(properties.getProperty("SchedulePrevKeys", KeyEvent.VK_PAGE_UP.toString()))
+        nextSongKey = getFirstKeyCode(properties.getProperty("GoLiveNextKeys", KeyEvent.VK_PAGE_DOWN.toString()))
+        logoScreenKey = getFirstKeyCode(properties.getProperty("LogoScreenKeys", "C-" + KeyEvent.VK_L.toString()))
+        blackScreenKey = getFirstKeyCode(properties.getProperty("BlackScreenKeys", "C-" + KeyEvent.VK_B.toString()))
+        clearScreenKey = getFirstKeyCode(properties.getProperty("ClearScreenKeys", "C-" + KeyEvent.VK_C.toString()))
 
         if (!File(propertiesFilePath).exists()) {
             save()
@@ -48,13 +50,13 @@ object EasyWorshipProperties {
 
     fun save() {
         logger.info("Saving easyworship properties")
-        properties.setProperty("previousVerseKey", previousVerseKey.toString())
-        properties.setProperty("nextVerseKey", nextVerseKey.toString())
-        properties.setProperty("previousSongKey", previousSongKey.toString())
-        properties.setProperty("nextSongKey", nextSongKey.toString())
-        properties.setProperty("logoScreenKey", logoScreenKey.toString())
-        properties.setProperty("blackScreenKey", blackScreenKey.toString())
-        properties.setProperty("clearScreenKey", clearScreenKey.toString())
+        properties.setProperty("SlidePrevKeys", previousVerseKey)
+        properties.setProperty("SlideNextKeys", nextVerseKey)
+        properties.setProperty("SchedulePrevKeys", previousSongKey)
+        properties.setProperty("GoLiveNextKeys", nextSongKey)
+        properties.setProperty("LogoScreenKeys", logoScreenKey)
+        properties.setProperty("BlackScreenKeys", blackScreenKey)
+        properties.setProperty("ClearScreenKeys", clearScreenKey)
 
         if (!writeToFile) {
             return
@@ -64,9 +66,11 @@ object EasyWorshipProperties {
 
         FileOutputStream(propertiesFilePath).use { fileOutputStream ->
             properties.store(
-                fileOutputStream,
-                "User properties for EasyWorship plugin"
+                    fileOutputStream,
+                    "User properties for EasyWorship plugin"
             )
         }
     }
+
+    fun getFirstKeyCode(value: String): String = value.split(",").first().trim()
 }
