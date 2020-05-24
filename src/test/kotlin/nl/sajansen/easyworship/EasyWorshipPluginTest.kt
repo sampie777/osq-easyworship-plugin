@@ -1,5 +1,7 @@
+package nl.sajansen.easyworship
+
+import nl.sajansen.easyworship.queItems.EasyWorshipNextSongQueItem
 import objects.que.JsonQue
-import queItems.EasyWorshipNextSongQueItem
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue

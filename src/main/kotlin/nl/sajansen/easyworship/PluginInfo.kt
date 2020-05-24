@@ -1,3 +1,5 @@
+package nl.sajansen.easyworship
+
 import gui.MainFrame
 import java.util.*
 
@@ -7,7 +9,7 @@ object PluginInfo {
     val author: String
 
     init {
-        properties.load(EasyWorshipPlugin::class.java.getResourceAsStream("/easyworshipplugin.properties"))
+        properties.load(EasyWorshipPlugin::class.java.getResourceAsStream("/nl/sajansen/easyworship/easyworshipplugin.properties"))
         version = properties.getProperty("version")
         author = properties.getProperty("author")
     }

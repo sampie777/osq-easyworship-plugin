@@ -1,9 +1,11 @@
+package nl.sajansen.easyworship
+
 import gui.utils.createImageIcon
 import handles.QueItemTransferHandler
 import objects.que.JsonQue
-import plugins.common.BasePlugin
+import plugins.common.QueItemBasePlugin
 import plugins.common.QueItem
-import queItems.*
+import nl.sajansen.easyworship.queItems.*
 import java.awt.*
 import java.net.URL
 import java.util.logging.Logger
@@ -12,14 +14,14 @@ import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 @Suppress("unused")
-class EasyWorshipPlugin : BasePlugin {
+class EasyWorshipPlugin : QueItemBasePlugin {
     private val logger = Logger.getLogger(EasyWorshipPlugin::class.java.name)
 
     override val name = "EasyWorshipPlugin"
     override val description = "Que items for integration with EasyWorship"
     override val version = PluginInfo.version
 
-    override val icon: Icon? = createImageIcon("/icon-14.png")
+    override val icon: Icon? = createImageIcon("/nl/sajansen/easyworship/icon-14.png")
 
     override val tabName = "EasyWorship"
 

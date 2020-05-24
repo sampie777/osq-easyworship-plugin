@@ -1,3 +1,5 @@
+package nl.sajansen.easyworship
+
 import com.sun.jna.platform.DesktopWindow
 import com.sun.jna.platform.WindowUtils
 import com.sun.jna.platform.win32.User32
@@ -18,7 +20,7 @@ object EasyWorship {
     private fun findWindowHandle(windowTitle: String): Boolean {
         if (!System.getProperty("os.name").toLowerCase().contains("win")) {
             logger.warning("Must run on Windows to find the window")
-            Notifications.add("Application must run on Windows operating system", "EasyWorship")
+            Notifications.add("Plugin must run on Windows operating system", "EasyWorship")
             return false
         }
 
@@ -152,7 +154,11 @@ object EasyWorship {
             return
         }
 
-        keyPress(key.substringAfter("-").toInt(), sleepTime, ctrl = key.startsWith("C-"))
+        keyPress(
+            key.substringAfter("-").toInt(),
+            sleepTime,
+            ctrl = key.startsWith("C-")
+        )
     }
 
     private fun keyPress(key: Int, sleepTime: Int = 50, ctrl: Boolean = false) {

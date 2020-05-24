@@ -1,4 +1,4 @@
-package queItems
+package nl.sajansen.easyworship.queItems
 
 import plugins.common.BasePlugin
 import plugins.common.QueItem

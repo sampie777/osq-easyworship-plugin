@@ -1,3 +1,5 @@
+package nl.sajansen.easyworship
+
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
