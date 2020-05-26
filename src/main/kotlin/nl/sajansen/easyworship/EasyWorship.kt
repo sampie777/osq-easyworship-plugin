@@ -25,7 +25,7 @@ object EasyWorship {
         }
 
         window = WindowUtils.getAllWindows(true)
-                .find { it.title.contains(windowContainsText) }
+                .find { it.title.contains(windowTitle) }
 
         if (window != null) {
             return true
@@ -167,8 +167,8 @@ object EasyWorship {
                 robot.keyPress(KeyEvent.VK_CONTROL)
             }
             robot.keyPress(key)
-            robot.keyRelease(key)
             robot.delay(sleepTime)
+            robot.keyRelease(key)
             if (ctrl) {
                 robot.keyRelease(KeyEvent.VK_CONTROL)
             }
