@@ -1,20 +1,45 @@
 package nl.sajansen.easyworship
 
-import com.sun.jna.platform.DesktopWindow
-import com.sun.jna.platform.WindowUtils
+import com.sun.jna.Native
+import com.sun.jna.Pointer
 import com.sun.jna.platform.win32.User32
+import com.sun.jna.platform.win32.WinDef
+import com.sun.jna.platform.win32.WinUser
 import objects.notifications.Notifications
 import java.awt.AWTException
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.util.logging.Logger
 
+class WindowFinder(private val windowTitle: String) : WinUser.WNDENUMPROC {
+    private val logger = Logger.getLogger(WindowFinder::class.java.name)
+
+    var windowHandle: WinDef.HWND? = null
+    var count: Int = 0
+
+    override fun callback(hWnd: WinDef.HWND, arg1: Pointer?): Boolean {
+        val windowText = CharArray(512)
+        User32.INSTANCE.GetWindowText(hWnd, windowText, 512)
+        val wText = Native.toString(windowText)
+
+        if (wText.isEmpty()) {
+            return true
+        }
+
+        if (wText.toLowerCase().contains(windowTitle)) {
+            windowHandle = hWnd
+            return false
+        }
+        return true
+    }
+}
+
 object EasyWorship {
     private val logger = Logger.getLogger(EasyWorship::class.java.name)
 
     private const val windowContainsText = "EasyWorship 2009"
 
-    private var window: DesktopWindow? = null
+    private var windowHandle: WinDef.HWND? = null
     private val robot = Robot()
 
     private fun findWindowHandle(windowTitle: String): Boolean {
@@ -24,10 +49,11 @@ object EasyWorship {
             return false
         }
 
-        window = WindowUtils.getAllWindows(true)
-                .find { it.title.contains(windowTitle) }
+        val windowFinder = WindowFinder(windowTitle.toLowerCase())
+        User32.INSTANCE.EnumWindows(windowFinder, null)
+        windowHandle = windowFinder.windowHandle
 
-        if (window != null) {
+        if (windowHandle != null) {
             return true
         }
 
@@ -102,12 +128,12 @@ object EasyWorship {
 
     private fun focus(): Boolean {
         logger.info("Focus window")
-        if (!findWindowHandle(windowContainsText) || window == null) {
+        if (!findWindowHandle(windowContainsText) || windowHandle == null) {
             return false
         }
 
-        User32.INSTANCE.SetForegroundWindow(window!!.hwnd)
-        User32.INSTANCE.SetFocus(window!!.hwnd)
+        User32.INSTANCE.SetForegroundWindow(windowHandle)
+        User32.INSTANCE.SetFocus(windowHandle)
         return true
     }
 
