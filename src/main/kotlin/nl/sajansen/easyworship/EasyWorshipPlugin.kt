@@ -18,7 +18,7 @@ class EasyWorshipPlugin : QueItemBasePlugin {
     private val logger = Logger.getLogger(EasyWorshipPlugin::class.java.name)
 
     override val name = "EasyWorshipPlugin"
-    override val description = "Que items for integration with EasyWorship"
+    override val description = "Queue items for integration with EasyWorship"
     override val version = PluginInfo.version
 
     override val icon: Icon? = createImageIcon("/nl/sajansen/easyworship/icon-14.png")
@@ -71,7 +71,7 @@ class EasyWorshipPlugin : QueItemBasePlugin {
             "Toggle logo screen" -> EasyWorshipLogoScreenQueItem(this)
             "Toggle black screen" -> EasyWorshipBlackScreenQueItem(this)
             "Toggle clear screen" -> EasyWorshipClearScreenQueItem(this)
-            else -> throw IllegalArgumentException("Invalid EasyWorship que item: $value")
+            else -> throw IllegalArgumentException("Invalid EasyWorship queue item: $value")
         }
     }
 
@@ -84,7 +84,7 @@ class EasyWorshipPlugin : QueItemBasePlugin {
             EasyWorshipLogoScreenQueItem::class.java.simpleName -> EasyWorshipLogoScreenQueItem(this)
             EasyWorshipBlackScreenQueItem::class.java.simpleName -> EasyWorshipBlackScreenQueItem(this)
             EasyWorshipClearScreenQueItem::class.java.simpleName -> EasyWorshipClearScreenQueItem(this)
-            else -> throw IllegalArgumentException("Invalid EasyWorship que item: ${jsonQueItem.className}")
+            else -> throw IllegalArgumentException("Invalid EasyWorship queue item: ${jsonQueItem.className}")
         }
     }
 
