@@ -45,7 +45,7 @@ class EasyWorshipPlugin : QueItemBasePlugin {
         val list: JList<EasyWorshipQueItem> = JList(queItems)
         list.selectionMode = ListSelectionModel.SINGLE_SELECTION
         list.dragEnabled = true
-        list.transferHandler = QueItemTransferHandler()
+        list.transferHandler = EasyWorshipQueItemTransferHandler(this)
         list.background = null
         list.font = Font("Dialog", Font.PLAIN, 14)
         list.cursor = Cursor(Cursor.HAND_CURSOR)
