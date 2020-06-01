@@ -1,10 +1,10 @@
 package nl.sajansen.easyworship.queItems
 
 import GUI
-import plugins.common.BasePlugin
 import nl.sajansen.easyworship.EasyWorship
+import nl.sajansen.easyworship.EasyWorshipPlugin
 
-class EasyWorshipBlackScreenQueItem(plugin: BasePlugin) : EasyWorshipQueItem(plugin, "Toggle black screen") {
+class EasyWorshipBlackScreenQueItem(plugin: EasyWorshipPlugin) : EasyWorshipQueItem(plugin, "Toggle black screen") {
     override fun activate() {
         EasyWorship.doBlackScreen()
         GUI.currentFrame?.toFront()

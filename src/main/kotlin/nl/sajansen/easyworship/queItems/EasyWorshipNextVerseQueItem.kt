@@ -1,10 +1,16 @@
 package nl.sajansen.easyworship.queItems
 
 import GUI
-import plugins.common.BasePlugin
+import nl.sajansen.easyworship.EasyWorshipPlugin
 import nl.sajansen.easyworship.EasyWorship
 
-class EasyWorshipNextVerseQueItem(plugin: BasePlugin) : EasyWorshipQueItem(plugin, "Next verse") {
+class EasyWorshipNextVerseQueItem(plugin: EasyWorshipPlugin) : EasyWorshipQueItem(plugin, "Next verse") {
+
+    override fun activateAsPrevious() {
+        EasyWorship.doPreviousVerse()
+        GUI.currentFrame?.toFront()
+    }
+
     override fun activate() {
         EasyWorship.doNextVerse()
         GUI.currentFrame?.toFront()

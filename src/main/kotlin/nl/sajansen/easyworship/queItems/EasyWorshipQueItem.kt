@@ -1,11 +1,13 @@
 package nl.sajansen.easyworship.queItems
 
-import plugins.common.BasePlugin
-import plugins.common.QueItem
+import nl.sajansen.easyworship.EasyWorshipPlugin
+import objects.que.QueItem
+import java.awt.Color
 
-abstract class EasyWorshipQueItem(override val plugin: BasePlugin, override val name: String) : QueItem {
+abstract class EasyWorshipQueItem(override val plugin: EasyWorshipPlugin, override val name: String) : QueItem {
 
     override var executeAfterPrevious = false
+    override var quickAccessColor: Color? = plugin.quickAccessColor
 
     override fun toString() = name
 

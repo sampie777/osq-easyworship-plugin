@@ -4,7 +4,7 @@ import gui.utils.createImageIcon
 import handles.QueItemTransferHandler
 import objects.que.JsonQue
 import plugins.common.QueItemBasePlugin
-import plugins.common.QueItem
+import objects.que.QueItem
 import nl.sajansen.easyworship.queItems.*
 import java.awt.*
 import java.net.URL
@@ -24,6 +24,7 @@ class EasyWorshipPlugin : QueItemBasePlugin {
     override val icon: Icon? = createImageIcon("/nl/sajansen/easyworship/icon-14.png")
 
     override val tabName = "EasyWorship"
+    internal val quickAccessColor = Color(239, 229, 255)
 
     override fun sourcePanel(): JComponent {
         val panel = JPanel(BorderLayout(10, 10))

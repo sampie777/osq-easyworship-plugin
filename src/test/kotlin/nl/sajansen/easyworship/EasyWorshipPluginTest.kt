@@ -11,7 +11,7 @@ class EasyWorshipPluginTest {
     @Test
     fun testJsonToQueItem() {
         val plugin = EasyWorshipPlugin()
-        val jsonQueItem = JsonQue.QueItem("", "EasyWorshipNextSongQueItem", "", false, HashMap())
+        val jsonQueItem = JsonQue.QueItem("", "EasyWorshipNextSongQueItem", "", false, null, HashMap())
 
         val queItem = plugin.jsonToQueItem(jsonQueItem)
 
