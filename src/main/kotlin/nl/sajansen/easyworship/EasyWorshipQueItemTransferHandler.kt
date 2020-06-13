@@ -10,9 +10,8 @@ class EasyWorshipQueItemTransferHandler(private val plugin: EasyWorshipPlugin) :
 
     override fun createTransferable(component: JComponent): Transferable {
         val list = component as JList<*>
-        val queItemClass = list.selectedValue as EasyWorshipQueItem
 
-        queItem = when (queItemClass) {
+        queItem = when (list.selectedValue) {
             is EasyWorshipPreviousVerseQueItem -> EasyWorshipPreviousVerseQueItem(plugin)
             is EasyWorshipNextVerseQueItem -> EasyWorshipNextVerseQueItem(plugin)
             is EasyWorshipPreviousSongQueItem -> EasyWorshipPreviousSongQueItem(plugin)

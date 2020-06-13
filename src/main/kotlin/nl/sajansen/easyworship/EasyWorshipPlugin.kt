@@ -1,6 +1,7 @@
 package nl.sajansen.easyworship
 
 import gui.utils.createImageIcon
+import gui.utils.DefaultSourcesList
 import handles.QueItemTransferHandler
 import objects.que.JsonQue
 import plugins.common.QueItemBasePlugin
@@ -10,7 +11,6 @@ import java.awt.*
 import java.net.URL
 import java.util.logging.Logger
 import javax.swing.*
-import javax.swing.border.CompoundBorder
 import javax.swing.border.EmptyBorder
 
 @Suppress("unused")
@@ -43,21 +43,12 @@ class EasyWorshipPlugin : QueItemBasePlugin {
             EasyWorshipClearScreenQueItem(this)
         )
 
-        val list: JList<EasyWorshipQueItem> = JList(queItems)
-        list.selectionMode = ListSelectionModel.SINGLE_SELECTION
-        list.dragEnabled = true
+        val list: JList<EasyWorshipQueItem> = DefaultSourcesList(queItems)
         list.transferHandler = EasyWorshipQueItemTransferHandler(this)
-        list.background = null
-        list.font = Font("Dialog", Font.PLAIN, 14)
-        list.cursor = Cursor(Cursor.HAND_CURSOR)
-        list.border = CompoundBorder(
-            BorderFactory.createLineBorder(Color(180, 180, 180)),
-            EmptyBorder(10, 10, 0, 10)
-        )
 
         val scrollPanel = JScrollPane(list)
         scrollPanel.preferredSize = Dimension(300, 500)
-        scrollPanel.border = null
+        scrollPanel.border = BorderFactory.createLineBorder(Color(180, 180, 180))
         panel.add(scrollPanel, BorderLayout.CENTER)
 
         return panel
