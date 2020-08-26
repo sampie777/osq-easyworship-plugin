@@ -3,7 +3,7 @@ package nl.sajansen.easyworship
 import gui.utils.createImageIcon
 import gui.utils.DefaultSourcesList
 import handles.QueItemTransferHandler
-import objects.que.JsonQue
+import objects.que.JsonQueue
 import plugins.common.QueItemBasePlugin
 import objects.que.QueItem
 import nl.sajansen.easyworship.queItems.*
@@ -67,7 +67,7 @@ class EasyWorshipPlugin : QueItemBasePlugin {
         }
     }
 
-    override fun jsonToQueItem(jsonQueItem: JsonQue.QueItem): QueItem {
+    override fun jsonToQueItem(jsonQueItem: JsonQueue.QueueItem): QueItem {
         return when (jsonQueItem.className) {
             EasyWorshipPreviousVerseQueItem::class.java.simpleName -> EasyWorshipPreviousVerseQueItem(this)
             EasyWorshipNextVerseQueItem::class.java.simpleName -> EasyWorshipNextVerseQueItem(this)

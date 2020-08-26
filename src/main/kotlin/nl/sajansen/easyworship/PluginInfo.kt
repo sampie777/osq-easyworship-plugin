@@ -1,6 +1,5 @@
 package nl.sajansen.easyworship
 
-import gui.MainFrame
 import java.util.*
 
 object PluginInfo {
